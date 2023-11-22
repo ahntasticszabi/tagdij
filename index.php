@@ -22,16 +22,23 @@
 
     print "</td><td align=right>";
 
-    $befizek = mysqli_query($adb, "SELECT * FROM befiz WHERE azon='$_GET[id]'");
-
-    while($befiz = mysqli_fetch_array($befizek))
+    if(!isset($_GET['id']))
     {
-        print "$befiz[datum] : $befiz[osszeg]<br>";
+        print "<h2> Válassz egy nevet a bal oldali listából!";
     }
+    else 
+    {   
+        $befizek = mysqli_query($adb, "SELECT * FROM befiz WHERE azon='$_GET[id]'");
 
-    $osszbefiz = mysqli_fetch_array(mysqli_query($adb, "SELECT SUM(osszeg) FROM befiz WHERE azon='$_GET[id]'"));
-
-    print "Összes befizetés: $osszbefiz[0]";
+        while($befiz = mysqli_fetch_array($befizek))
+        {
+            print "$befiz[datum] : $befiz[osszeg]<br>";
+        }
+    
+        $osszbefiz = mysqli_fetch_array(mysqli_query($adb, "SELECT SUM(osszeg) FROM befiz WHERE azon='$_GET[id]'"));
+    
+        print "Összes befizetés: $osszbefiz[0]";
+    }
     
     print "</td></tr>";
 
